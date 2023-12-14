@@ -23,7 +23,7 @@ export const Cart = () => {
   };
 
   const checkout = async () => {
-    await fetch("https://artsycoder533.github.io/stripe/api/checkout", {
+    await fetch("https://stripe-beta-lyart.vercel.app/api/checkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
