@@ -23,7 +23,7 @@ export const Cart = () => {
   };
 
   const checkout = async () => {
-    await fetch("http://localhost:3000/api/checkout", {
+    await fetch("https://artsycoder533.github.io/stripe/api/checkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
