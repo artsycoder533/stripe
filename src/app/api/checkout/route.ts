@@ -65,40 +65,10 @@ export const POST = async (request: any) => {
     line_items: stripeItems,
     shipping_options: [
       {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: 0,
-          currency: "usd",
-          display_name: "Free Shipping",
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 5,
-            },
-            maximum: {
-              unit: "business_day",
-              value: 7,
-            },
-          },
-        },
+        shipping_rate: 'shr_1ONQLbKHr1d69CY5jEuVXBeT'
       },
       {
-        shipping_rate_data: {
-          type: "fixed_amount",
-          fixed_amount: 599,
-          currency: "usd",
-          display_name: "USPS Media Mail",
-          delivery_estimate: {
-            minimum: {
-              unit: "business_day",
-              value: 5,
-            },
-            maximum: {
-              unit: "business_day",
-              value: 7,
-            },
-          },
-        },
+        shipping_rate: 'shr_1ONQC1KHr1d69CY5NKniFzUL'
       },
     ],
     mode: "payment",
