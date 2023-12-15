@@ -64,6 +64,44 @@ export const POST = async (request: any) => {
   //create stripe session
   const session = await stripe.checkout.sessions.create({
     line_items: stripeItems,
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: 0,
+          currency: 'usd',
+        },
+        display_name: 'Free Shipping',
+        delivery_estimate: {
+          minimum: {
+            unit: 'business_day',
+            value: 5,
+          },
+          maximum: {
+            unit: 'business_day',
+            value: 7,
+          }
+        }
+      },
+      {
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: 599,
+          currency: 'usd',
+        },
+        display_name: 'USPS Media Mail',
+        delivery_estimate: {
+          minimum: {
+            unit: 'business_day',
+            value: 5,
+          },
+          maximum: {
+            unit: 'business_day',
+            value: 7,
+          }
+        }
+      }
+    ],
     mode: "payment",
     success_url: "https://stripe-beta-lyart.vercel.app/success",
     cancel_url: "https://stripe-beta-lyart.vercel.app/cancel",
