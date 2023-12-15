@@ -40,18 +40,17 @@ export const POST = async (request: any) => {
   }
 
   activeProducts = await getActiveProducts();
-  console.log('active products ==>', activeProducts)
+  console.log("active products ==>", activeProducts);
   //construst array of objects that we will pass to the stripe checkout session
   let stripeItems: any = [];
 
   for (const product of data) {
     const stripeProduct = activeProducts?.find(
-        (prod: any) =>
-          prod?.name?.toLowerCase() === product?.name?.toLowerCase()
-      );
+      (prod: any) => prod?.name?.toLowerCase() === product?.name?.toLowerCase()
+    );
 
     if (stripeProduct) {
-        console.log('stripe product==>', stripeProduct)
+      console.log("stripe product==>", stripeProduct);
       stripeItems.push({
         price: stripeProduct?.default_price,
         quantity: product?.quantity,
@@ -59,7 +58,7 @@ export const POST = async (request: any) => {
     }
   }
 
-  console.log('stripeItems ==>', stripeItems)
+  console.log("stripeItems ==>", stripeItems);
 
   //create stripe session
   const session = await stripe.checkout.sessions.create({
@@ -67,40 +66,40 @@ export const POST = async (request: any) => {
     shipping_options: [
       {
         shipping_rate_data: {
-          type: 'fixed_amount',
+          type: "fixed_amount",
           fixed_amount: 0,
-          currency: 'usd',
-        },
-        display_name: 'Free Shipping',
-        delivery_estimate: {
-          minimum: {
-            unit: 'business_day',
-            value: 5,
+          currency: "usd",
+          display_name: "Free Shipping",
+          delivery_estimate: {
+            minimum: {
+              unit: "business_day",
+              value: 5,
+            },
+            maximum: {
+              unit: "business_day",
+              value: 7,
+            },
           },
-          maximum: {
-            unit: 'business_day',
-            value: 7,
-          }
-        }
+        },
       },
       {
         shipping_rate_data: {
-          type: 'fixed_amount',
+          type: "fixed_amount",
           fixed_amount: 599,
-          currency: 'usd',
-        },
-        display_name: 'USPS Media Mail',
-        delivery_estimate: {
-          minimum: {
-            unit: 'business_day',
-            value: 5,
+          currency: "usd",
+          display_name: "USPS Media Mail",
+          delivery_estimate: {
+            minimum: {
+              unit: "business_day",
+              value: 5,
+            },
+            maximum: {
+              unit: "business_day",
+              value: 7,
+            },
           },
-          maximum: {
-            unit: 'business_day',
-            value: 7,
-          }
-        }
-      }
+        },
+      },
     ],
     mode: "payment",
     success_url: "https://stripe-beta-lyart.vercel.app/success",
